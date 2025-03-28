@@ -1,8 +1,6 @@
 import { create } from "zustand";
 import axios from "../lib/axios";
 import { toast } from "react-hot-toast";
-import { sub } from "framer-motion/client";
-import { useUserStore } from "./useUserStore";
 
 
 export const useCartStore = create((set, get) => ({ 
@@ -14,12 +12,20 @@ export const useCartStore = create((set, get) => ({
 		console.log("getCartItems called");
 		try {
 		  const res = await axios.get("/cart");
-		  console.log("API response:", res);
-		  if (res && res.data && res.data.length === 0) {
+		 if (res && res.data && res.data.length === 0) {
 			console.log("No products found");
 			set({ cart: [] });
 		  } else if (res && res.data) {	
-			const cartdata = res.data;
+
+			const cartdata = res.data.map((item) => ({
+			  _id: item._id,
+			  name: item.name,	
+			  price: item.price,
+			  quantity: item.quantity,
+			  image: item.image,
+			  category: item.category,
+			}));
+			
 			set({ cart: cartdata });
 			get().calculateTotals();
 		  } else {
@@ -65,12 +71,18 @@ export const useCartStore = create((set, get) => ({
 			get().removeFromCart(productId);
 			return;
 		}
+		try {
+			const res = await axios.put(`/cart/${productId}`, { quantity });
+			set((prevState) => ({
+			  cart: prevState.cart.map((item) => (item._id === productId ? { ...item, quantity } : item)),
+			}));
+			get().calculateTotals();
+		  } catch (error) {
+			console.error(`Error updating quantity: ${error.message}`);
+			toast.error("Error updating quantity");
+		  }
 
-		await axios.put(`/cart/${productId}`, { quantity });
-		set((prevState) => ({
-			cart: prevState.cart.map((item) => (item._id === productId ? { ...item, quantity } : item)),
-		}));
-		get().calculateTotals();
+	
 	},
     calculateTotals: () => {
         const { cart, coupon } =  get();

@@ -1,7 +1,10 @@
 import React from 'react'
 
-export const PeopleAlsoBought = () => {
+ const PeopleAlsoBought = () => {
   return (
     <div>PeopleAlsoBought</div>
-  )
-}
+  );
+};
+
+export default PeopleAlsoBought;
+
