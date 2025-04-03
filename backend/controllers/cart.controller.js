@@ -1,37 +1,32 @@
 import Product from "../models/product.model.js";
 
-export const getCartItems = async (req, res) => {
+export const getCartProducts = async (req, res) => {
 	try {
-	  const productIds = req.user.cartItems.map((cartItem) => cartItem.product);
-  
-	  const products = await Product.find({ _id: { $in: productIds } });
-  
-	  // add quantity for each product
-	  const cartItems = products.map((product) => {
-		const item = req.user.cartItems.find((item) => item.product.toString() === product._id.toString());
-  
-		return { ...product.toJSON(), quantity: item.quantity };
-	  });
-  
-	  res.json(cartItems);
-	} catch (error) {
-	  console.log("Error in getCartProducts controller", error.message);
-	  res.status(500).json({ message: "Server error", error: error.message });
-	}
-  };
+		const products = await Product.find({ _id: { $in: req.user.cartItems } });
 
+		// add quantity for each product
+		const cartItems = products.map((product) => {
+			const item = req.user.cartItems.find((cartItem) => cartItem.id === product.id);
+			return { ...product.toJSON(), quantity: item.quantity };
+		});
+
+		res.json(cartItems);
+	} catch (error) {
+		console.log("Error in getCartProducts controller", error.message);
+		res.status(500).json({ message: "Server error", error: error.message });
+	}
+};
 
 export const addToCart = async (req, res) => {
 	try {
 		const { productId } = req.body;
 		const user = req.user;
-		
 
-		const existingItem = user.cartItems.find((item) => item.product === productId);
+		const existingItem = user.cartItems.find((item) => item.id === productId);
 		if (existingItem) {
 			existingItem.quantity += 1;
 		} else {
-			user.cartItems.push({ product: productId, quantity: 1 });
+			user.cartItems.push(productId);
 		}
 
 		await user.save();

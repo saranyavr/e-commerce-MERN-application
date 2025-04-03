@@ -14,12 +14,6 @@ import CartPage from "./pages/CartPage";
 import { useCartStore } from "./stores/useCartStore";
 
 
-
-
-
-
-
-
 function App() {
   const { user, checkAuth, checkingAuth } = useUserStore();
 

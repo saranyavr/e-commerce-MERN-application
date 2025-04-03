@@ -69,7 +69,6 @@ export const useProductStore = create((set) => ({
 			toast.error(error.response.data.error || "Failed to update product");
 		}
 	},
-	
 	fetchFeaturedProducts: async () => {
 		set({ loading: true });
 		try {
