@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import CartItem from "../components/CartItem";
 import { ShoppingCart } from "lucide-react";
 import PeopleAlsoBought from "../components/PeopleAlsoBought";
+import OrderSummary from "../components/OrderSummary";
+
 
 
 
@@ -42,8 +44,8 @@ import PeopleAlsoBought from "../components/PeopleAlsoBought";
 							animate={{ opacity: 1, x: 0 }}
 							transition={{ duration: 0.5, delay: 0.4 }}
 						>
-						{	/*<OrderSummary /> */}
-							{/* <GiftCouponCard /> */}
+						<OrderSummary /> 
+						{/* <GiftCouponCard /> */}
 						</motion.div>
 					)}
 

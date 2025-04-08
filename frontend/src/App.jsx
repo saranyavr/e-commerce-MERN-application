@@ -25,8 +25,10 @@ function App() {
   }, [checkAuth]);
 
   useEffect(() => {
+    if(!user) return;
+    // Fetch cart items when user is logged in
 		getCartItems();
-	}, [getCartItems]);
+	}, [getCartItems, user]);
 
 
   if(checkingAuth) return <LoadingSpinner />
@@ -51,11 +53,7 @@ function App() {
 <Route path ="/category/:category" element={<CategoryPage/>}/>
 <Route path='/cart' element={user ? <CartPage /> : <Navigate to='/login' />} />
 
-
-
-
-
-   </Routes>
+  </Routes>
    </div>
    <Toaster />
    </div>
