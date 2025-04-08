@@ -50,7 +50,7 @@ const OrderSummary = () => {
 				</div>
 
 				<motion.button
-					className='flex w-full items-center justify-center rounded-lg bg-pink-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-emerald-300'
+					className='flex w-full items-center justify-center rounded-lg bg-pink-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-300'
 					whileHover={{ scale: 1.05 }}
 					whileTap={{ scale: 0.95 }}
 					
@@ -62,7 +62,7 @@ const OrderSummary = () => {
 					<span className='text-sm font-normal text-gray-400'>or</span>
 					<Link
 						to='/'
-						className='inline-flex items-center gap-2 text-sm font-medium text-blue-400 underline hover:text-blue-300 hover:no-underline'
+						className='inline-flex items-center gap-2 text-sm font-medium text-emerald-400 underline hover:text-emerald-300 hover:no-underline'
 					>
 						Continue Shopping
 						

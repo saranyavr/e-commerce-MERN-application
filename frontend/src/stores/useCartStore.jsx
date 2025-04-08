@@ -2,7 +2,6 @@ import { create } from "zustand";
 import axios from "../lib/axios";
 import { toast } from "react-hot-toast";
 
-
 export const useCartStore = create((set, get) => ({
 	cart: [],
 	coupon: null,
@@ -37,13 +36,8 @@ export const useCartStore = create((set, get) => ({
 	getCartItems: async () => {
 		try {
 			const res = await axios.get("/cart");
-			if(res.status === 200 && res.data){
 			set({ cart: res.data });
 			get().calculateTotals();
-			}else{
-				set({ cart: [] });
-				toast.error("Failed to fetch cart items");
-			}
 		} catch (error) {
 			set({ cart: [] });
 			toast.error(error.response.data.message || "An error occurred");
@@ -101,7 +95,3 @@ export const useCartStore = create((set, get) => ({
 		set({ subtotal, total });
 	},
 }));
-
-
-
-

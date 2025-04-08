@@ -17,9 +17,6 @@ app.use(cookieParser()); // allow to parse cookies
 app.use(express.json({limit:"10mb"})); // allow to parse the body of the request
 
 
-
-
-
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
